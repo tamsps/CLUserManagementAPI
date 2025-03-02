@@ -22,7 +22,11 @@ namespace CLUserManagementAPI.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetUserById(int id)
 		{
-			_logger.LogInformation("GetUserById called with id: {id}", id);
+
+			var ls = new List<string>();
+			ls.Add("test");
+			ls.Add("test2");
+			var s = ls[2];
 
 			var user = await _usersService.GetUserInfoAsync(id);
 			if (user == null)
@@ -54,6 +58,7 @@ namespace CLUserManagementAPI.Controllers
 		[HttpPost("logout")]
 		public async Task<IActionResult> Logout()
 		{
+			string token = Request.Headers["Authorization"].ToString().Substring("Bearer ".Length).Trim();
 			await _usersService.LogoutUserAsync();
 			return Ok(new { Message = "User logged out successfully!" });
 		}

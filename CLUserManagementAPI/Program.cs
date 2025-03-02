@@ -4,6 +4,7 @@ using CLUserManagementAPI.Domain.Entities;
 using CLUserManagementAPI.Domain.Interfaces;
 using CLUserManagementAPI.Infrastructure.Data;
 using CLUserManagementAPI.Infrastructure.Repositories;
+using CLUserManagementAPI.MidleWare;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -53,7 +54,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 		});
 
 var app = builder.Build();
-
+app.UseMiddleware<RequestLoggingMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

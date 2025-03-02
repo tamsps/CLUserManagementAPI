@@ -8,10 +8,16 @@ namespace CLUserManagementAPI.HandleException
 {
 	public class HttpResponseExceptionFilter : IActionFilter, IOrderedFilter
 	{
-		public int Order => int.MaxValue - 10;
+		private readonly ILogger<UserController> _logger;
 
+		public int Order => 10;
 
-		public void OnActionExecuting(ActionExecutingContext context)
+		public HttpResponseExceptionFilter(ILogger<UserController> logger)
+      {
+          _logger = logger;
+      }
+
+    public void OnActionExecuting(ActionExecutingContext context)
 		{
 			MyLog("START", context.RouteData);
 		}
@@ -39,8 +45,8 @@ namespace CLUserManagementAPI.HandleException
 		{
 			var controllerName = routeData.Values["controller"];
 			var actionName = routeData.Values["action"];
-			var message = String.Format("{0} controller:{1} action:{2}", methodName, controllerName, actionName);
-			Log.Debug(message);
+			var message = String.Format("This is custom Log for: {0} controller:{1} action:{2}", methodName, controllerName, actionName);
+			_logger.LogDebug(message);
 
 		}
 
