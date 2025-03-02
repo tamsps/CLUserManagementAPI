@@ -18,16 +18,16 @@ namespace CLUserManagementAPI.Controllers
 			_usersService = usersService;
 			_logger = logger;
 		}
+
+		/// <summary>
+		/// Create user
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		[HttpGet("{id}")]
 		[Authorize]
 		public async Task<IActionResult> GetUserById(int id)
 		{
-
-			var ls = new List<string>();
-			ls.Add("test");
-			ls.Add("test2");
-			var s = ls[2];
-
 			var user = await _usersService.GetUserInfoAsync(id);
 			if (user == null)
 			{
@@ -35,12 +35,25 @@ namespace CLUserManagementAPI.Controllers
 			}
 			return Ok(user);
 		}
+
+
+		/// <summary>
+		/// Register user api
+		/// </summary>
+		/// <param name="user"></param>
+		/// <returns></returns>
 		[HttpPost("register")]
 		public async Task<IActionResult> Register([FromBody] User user)
 		{
 			await _usersService.RegisterUserAsync(user);
 			return Ok(new { Message = "User registered successfully!" });
 		}
+
+		/// <summary>
+		/// Login user api
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost("login")]
 		public async Task<IActionResult> Login([FromBody] LoginModel model)
 		{

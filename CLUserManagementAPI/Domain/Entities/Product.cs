@@ -17,19 +17,14 @@ namespace CLUserManagementAPI.Domain.Entities
 
 		public User? user { get; set; } // Cho phép UserId là null
 
-		[Required]
 		[StringLength(500)]
 		public string Description { get; set; }
 
-		[Required]
-		[Url]
 		public string ImageUrl { get; set; }
 
-		[Required]
 		[Range(0.01, 1000000)]
 		public decimal Price { get; set; }
 
-		[Required]
 		[StringLength(20)]
 		public string Unit { get; set; }
 	}

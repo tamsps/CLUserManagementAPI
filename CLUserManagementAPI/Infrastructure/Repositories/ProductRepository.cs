@@ -38,6 +38,13 @@ namespace CLUserManagementAPI.Infrastructure.Repositories
 
 		public async Task AddProductAsync(Product product)
 		{
+			var existingProd = await _context.Products
+								.FirstOrDefaultAsync(u => u.Name == product.Name);
+			if (existingProd != null)
+			{
+				throw new InvalidOperationException("A product with this name already exists.");
+			}
+
 			_context.Products.Add(product);
 			await _context.SaveChangesAsync();
 		}

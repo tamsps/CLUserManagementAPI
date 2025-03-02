@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CLUserManagementAPI.Controllers
 {
-	public class ProductController : Controller
+	[ApiController]
+	[Route("api/[controller]")]
+	public class ProductController : ControllerBase
 	{
 		private readonly IProductService _productService;
 

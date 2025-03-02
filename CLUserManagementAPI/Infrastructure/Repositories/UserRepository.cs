@@ -31,6 +31,13 @@ namespace Users.Infrastructure.Repositories
 
 		public async Task AddUserAsync(User user)
 		{
+			var existingUser = await _context.Users
+								.FirstOrDefaultAsync(u => u.Username == user.Username);
+			if (existingUser != null)
+			{
+				throw new InvalidOperationException("A user with this username already exists.");
+			}
+
 			_context.Users.Add(user);
 			await _context.SaveChangesAsync();
 		}

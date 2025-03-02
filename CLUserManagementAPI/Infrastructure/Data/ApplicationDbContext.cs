@@ -56,6 +56,7 @@ namespace CLUserManagementAPI.Infrastructure.Data
 				entity.Property(p => p.Price).IsRequired();
 				entity.Property(p => p.Unit).IsRequired().HasMaxLength(20);
 			});
+
 		}
 	}
 
