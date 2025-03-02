@@ -12,8 +12,10 @@ namespace CLUserManagementAPI.Domain.Entities
 		public int Id { get; set; }
 
 		[Required]
-		[StringLength(100, MinimumLength = 3)]
+		[StringLength(500)]
 		public string Name { get; set; }
+
+		public User? user { get; set; } // Cho phép UserId là null
 
 		[Required]
 		[StringLength(500)]

@@ -26,13 +26,27 @@ namespace CLUserManagementAPI.Infrastructure.Data
 			// Cấu hình entity User
 			builder.Entity<User>(entity =>
 			{
-				entity.HasKey(u => u.Id);
 				entity.Property(u => u.Username).IsRequired().HasMaxLength(50);
 				entity.Property(u => u.Email).IsRequired();
-				entity.Property(u => u.PasswordHash).IsRequired();
+				entity.Property(u => u.Password).IsRequired();
 			});
 
-			// Cấu hình entity Product
+			builder.Entity<User>()
+									.HasIndex(u => u.Username)
+									.IsUnique();
+
+			builder.Entity<User>()
+											.HasMany(u => u.Products) // Một User có nhiều Product
+											.WithOne(p => p.user)     // Một Product thuộc về một User
+											.OnDelete(DeleteBehavior.Cascade); // Xóa Product kh
+
+
+			// Ensure Id is an identity column
+			builder.Entity<User>()
+					.Property(u => u.Id)
+					.ValueGeneratedOnAdd(); 
+
+																	// Cấu hình entity Product
 			builder.Entity<Product>(entity =>
 			{
 				entity.HasKey(p => p.Id);

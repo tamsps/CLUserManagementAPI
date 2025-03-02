@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ namespace CLUserManagementAPI.Domain.Entities
 {
 	public class User
 	{
+
 		public int Id { get; set; }
 
 		[Required]
@@ -21,6 +24,8 @@ namespace CLUserManagementAPI.Domain.Entities
 
 		[Required]
 		[StringLength(100, MinimumLength = 6)]
-		public string PasswordHash { get; set; }
+		[Column("HashedPassword")] // Rename column to HashedPassword
+		public string Password { get; set; }
+		public ICollection<Product> ?Products { get; set; } = new List<Product>();
 	}
 }
